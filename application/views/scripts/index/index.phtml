@@ -1,0 +1,41 @@
+	<?php
+			$cnt = 0;
+	        $val = 0;
+	        $bukhuud = array();
+	        $bukhs = new Model_DbTable_Users();
+	        $bukh = $bukhs -> fetchAll($bukhs -> select());
+	        foreach ($bukh as $key => $value) {
+	        	$bukhuud[$value['id']] = $value['username'];
+	        }
+	        foreach ($this -> medee as $val) {
+	        	echo '<div class = "news-body">
+	        			<div>
+	        				<h2 style = "color: #428bca;font-family: helios">'.$val['title'].'</h2>
+	        				<div>';
+				                $content  = $val['content'];
+				                $convert = "";
+				                $len = strlen($content); 
+				                for($i=0; $i < $len; $i++) {
+				                    if($content[$i] == '&' and $content[$i+1] == 'q' and $content[$i+2] == 'u' and $content[$i+3] == 'o' and $content[$i+4] == 't' and $content[$i+5] == ';') 
+				                    {
+				                        $i=$i+5; $convert.="\"";
+				                    }
+				                    else 
+				                    {
+				                        $convert.=$content[$i];
+				                    }
+				                }
+				                $content = $convert;
+	        				echo $content;
+	        				echo '</div>
+	        			</div>
+	        			<div class = "dis10"></div>
+	        			<div><span style = "font-weight:bold; color: #428bca">Нийтэлсэн : '.$bukhuud[$val['uid']].' '.$val['date'].' </span></div>
+	        		</div>';
+	        		echo '<div class = "dis10"></div>';
+		}
+	    ?> 
+<?php echo $this->paginationControl($this->medee, 'Sliding', 'paginationFile.phtml'); ?>
+   
+	
+  
